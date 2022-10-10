@@ -51,7 +51,7 @@ for port in ports:
     log("Product: %s" % port.product)
     log("Interface: %s" % port.interface)
     log("################\n")
-    if " CH340 " in port.description:
+    if str(port.vid) == "6790" and str(port.pid) == "29987":
         if port.hwid.split(":")[1].split("=")[1] == "1A86":
             target_dev.append(port)
 
