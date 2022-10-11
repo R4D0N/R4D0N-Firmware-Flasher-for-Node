@@ -1,3 +1,4 @@
+import hashlib
 import sys
 import os
 import platform
@@ -12,7 +13,8 @@ if sys.version_info.major != 3:
 
 if platform.platform().startswith("darwin") is not True:
     print("This script is not compatible with the current OS installed.\nHalting Program.")
-    quit()
+    #REMOVE THIS
+    #quit()
 
 def tkinter_compat():
     if sys.version_info.minor < 9:
@@ -57,7 +59,7 @@ def node_locating(silent_stat=True):
     target_dev = []
     ports = list(list_ports.comports())
     for port in ports:
-        if " CH340 " in port.description:
+        if str(port.vid) == "6790" and str(port.pid) == "29987":
             if port.hwid.split(":")[1].split("=")[1] == "1A86":
                 target_dev.append(port)
 
@@ -96,7 +98,20 @@ def firmware_selection():
         print("No Firmware Selected.\nHalting Program")
         quit()
     else:
-        return dialog
+        f = open(dialog, "rb").read()
+        m = hashlib.md5(f)
+        firmware_hash = m.hexdigest()
+
+        approved_hashes = []
+        ah = open("firmware_checksums", "r").readlines()
+        for hash in ah:
+            approved_hashes.append(hash.strip().split("#")[0])
+
+        if firmware_hash in approved_hashes:
+            return dialog
+        else:
+            print("{} is not a valid firmware file.\nHalting Program")
+            quit()
 
 def webpage_selection():
     dialog = askdirectory(title="Select Node Webpage Folder")
@@ -112,6 +127,30 @@ def webpage_selection():
 
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    run_type = 0
+    if len(args) != 0:
+        if "-h" in args or "--help" in args:
+            help_menu = [
+                "{} Help\n".format(sys.argv[0]),
+                "-h, --help\n",
+                "   Retrieve help for usage of {}\n".format(sys.argv[0]),
+                "   Example: python {} --help\n\n".format(sys.argv[0]),
+
+                "-f, --flash\n",
+                "   Run the script in Live mode and flash the Fiberpunk Node\n",
+                "   Example: python {} --flash\n".format(sys.argv[0])
+                ]
+            print("".join(help_menu))
+            quit()
+
+        elif "-f" in args or "--flash" in args:
+            run_type = 1
+
+        else:
+            print("Invalid argument.\nSee `python {} -h` for details.".format(sys.argv[0]))
+            quit()
+
     required_info = {"Port":None, "Firmware":None, "Webpage":None}
     tkinter_compat()
 
@@ -128,7 +167,10 @@ if __name__ == "__main__":
 
     print('Using command %s' % ' '.join(command))
     try:
-        esptool.main(command)
+        if run_type == 1:
+            esptool.main(command)
+        else:
+            print("Updater running in test mode - Flash Aborted")
     except Exception as e:
         print("Flashing Error Occurred:\n↳  {}".format(e))
         quit()
@@ -139,13 +181,21 @@ if __name__ == "__main__":
     except:
         print("Unable to generate spifs.bin\nHalting Program")
         quit()
+    
     print("Spiff BIN file Successfully generated!\n")
     print("Flashing Webpage BIN file...")
     command = ["--chip", "esp32", "--baud", "921600", "--port", required_info["Port"], "--before", "default_reset", "--after", "hard_reset", "write_flash", "-z",
     "--flash_mode", "dio", "--flash_freq", "80m", "--fresh_size", "detect", "2686976", "spifs.bin"]
     try:
-        esptool.main(command)
+        if run_type == 1:
+            esptool.main(command)
+        else:
+            print("Updater running in test mode - Flash Aborted")
     except Exception as e:
         print("Flashing Error Occurred:\n↳  {}".format(e))
         quit()
-    print("\n\nNODE UPDATE COMPLETE!!!")
+    
+    if run_type == 1:
+        print("\n\nNODE UPDATE COMPLETE!!!")
+    else:
+        print("\n\nNODE TEST COMPLETE!!!")
