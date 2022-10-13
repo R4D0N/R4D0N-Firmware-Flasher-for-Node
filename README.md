@@ -25,7 +25,7 @@ You can run the updater in test mode Ex. `python3 node_updater.py`
 
 2. Follow the instructions listed on the prompt
 
-## [node_spec_gen.py](node-spec-gen.py)
+## [node_spec_gen.py - Deprecated](node-spec-gen.py)
 This file ***will not*** modify the Node in any way. This script is designed to collect information about the host computer's ability to run the flashing software.
 
 
