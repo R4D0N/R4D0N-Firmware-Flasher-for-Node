@@ -27,7 +27,6 @@ def platform_check(safety=True):
 
 def tkinter_check():
     if version_info.minor < 9:
-        print("\n####################")
         print("Warning: You are using Python {}.{}.{} which can be unpredictable when selecting files.".format(version_info.major, version_info.minor, version_info.micro))
         print("It is better to use Python 3.9.x for stability reasons.")
         choice = input("Do you wish to proceed at your own risk? (y/n) ")
@@ -204,6 +203,9 @@ def main():
 
 
 if __name__ == "__main__":
+    logo_payload = open("RFFN_Logo.txt", "r").read()
+    print(logo_payload)
+
     #Default Switchboard {"platform_check":True, "node_locating":False, "list_installed":False, "list_flash_info":False}
     switchboard = {"platform_check":True, "node_locating":False, "list_installed":False, "list_flash_info":False}
     """
