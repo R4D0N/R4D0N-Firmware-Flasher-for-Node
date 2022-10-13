@@ -1,5 +1,6 @@
-# Node Firmware Flasher For Mac
-This tool allows Mac users to flash their Fiberpunk Nodes with the newest firmware
+# R4D0N Firmware Flasher For Node
+This tool allows Non-Windows users to flash their Fiberpunk Nodes with the newest firmware.
+This tool works on Windows as well, but the Fiberpunk Devs have a released a binary that does the same job with a GUI.
 
 **Disclaimer:** This project is not associated with the Fiberpunk Team, and all Trademarks for the Node and related products belong to them.
 
