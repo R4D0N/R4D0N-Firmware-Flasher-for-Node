@@ -217,8 +217,8 @@ if __name__ == "__main__":
     version_check()
     #Tkinter Check
     tkinter_check()
-    #Platform Check
-    platform_check(switchboard["platform_check"])
+    #Platform Check <- Discontinued to allow for all OS
+    #platform_check(switchboard["platform_check"])
 
     ##DEPENDANCY CHECKING
     reqs = []
