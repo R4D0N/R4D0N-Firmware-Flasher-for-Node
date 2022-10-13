@@ -1,3 +1,4 @@
 *.bin
 webpage/
 __pycache__/
+node-spec-gen.py
