@@ -450,7 +450,7 @@ class SpiffsFS():
         return img
 
 
-def main():
+def main(raw_args=None):
     parser = argparse.ArgumentParser(description="SPIFFS Image Generator",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -503,7 +503,8 @@ def main():
                         action="store_true",
                         default=False)
 
-    args = parser.parse_args()
+    args = parser.parse_args(raw_args)
+
 
     if not os.path.exists(args.base_dir):
         raise RuntimeError("given base directory %s does not exist" % args.base_dir)
