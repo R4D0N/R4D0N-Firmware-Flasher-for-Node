@@ -163,7 +163,7 @@ def main():
     # MAIN FIRMWARE FLASHING
     print("Flashing Node Main Firmware (Step 2/3)")
     command = ["--chip", "esp32", "--baud", "921600", "--port", required_info["Port"], "--before", "default_reset", "--after", "hard_reset", 
-    "write_flash", "-z", "--flash_mode", "dio", "--flash_freq", "80m", "--fresh_size", "detect", "0xe000", "boot_app0.bin", 
+    "write_flash", "-z", "--flash_mode", "dio", "--flash_freq", "80m", "--flash_size", "detect", "0xe000", "boot_app0.bin", 
     "0x1000", "bootloader_qio_80m.bin", "0x8000", "default.bin", "0x10000", required_info["Firmware"]]
 
     if switchboard["list_flash_info"] is True:
@@ -182,7 +182,7 @@ def main():
     # WEBPAGE FLASHING
     print("Flashing Webpage BIN file (Stage 3/3)")
     command = ["--chip", "esp32", "--baud", "921600", "--port", required_info["Port"], "--before", "default_reset", "--after", "hard_reset", "write_flash", "-z",
-    "--flash_mode", "dio", "--flash_freq", "80m", "--fresh_size", "detect", "2686976", "spifs.bin"]
+    "--flash_mode", "dio", "--flash_freq", "80m", "--flash_size", "detect", "2686976", "spifs.bin"]
 
     if switchboard["list_flash_info"] is True:
         print('Using command %s' % ' '.join(command))
