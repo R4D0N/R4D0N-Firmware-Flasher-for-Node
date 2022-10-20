@@ -6,7 +6,7 @@ from time import sleep
 from spiffsgen import main as spiffmain
 
 #Imported for dependancy checking
-from pkg_resources import get_distribution, DistributionNotFound, require
+from pkg_resources import get_distribution, DistributionNotFound
 
 #Compatibility Checks
 def version_check():
@@ -243,7 +243,6 @@ if __name__ == "__main__":
     try:
         from tkinter.filedialog import askopenfilename, askdirectory
         from serial.tools import list_ports
-        require("esptool==3.1")
         import esptool
     except Exception as e:
         print("Attempted Library Import\nProcess Failed:\n{}".format(e))
