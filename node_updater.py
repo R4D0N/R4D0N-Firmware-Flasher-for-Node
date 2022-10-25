@@ -1,4 +1,5 @@
 from hashlib import md5
+from requests import get
 from sys import version_info, argv
 from os import path, listdir
 from platform import platform
@@ -116,8 +117,9 @@ def firmware_selection():
         firmware_hash = m.hexdigest()
 
         approved_hashes = []
-        ah = open("firmware_checksums", "r").readlines()
-        for hash in ah:
+        checksum_url = "https://raw.githubusercontent.com/R4D0N/R4D0N-Firmware-Flasher-for-Node/main/firmware_checksums"
+        results_raw = get(checksum_url).text
+        for hash in results_raw.split("\n"):
             approved_hashes.append(hash.strip().split("#")[0])
 
         if firmware_hash in approved_hashes:
