@@ -14,6 +14,9 @@ You can use the `-h` or `--help` flag
 
 Ex. `python3 node_updater.py -h`
 
+### Semi-Graphical Interface
+`python3 updater_gui.py`
+
 ### For Compatibility Testing
 You can run the updater in test mode Ex. `python3 node_updater.py`
 
