@@ -1,4 +1,10 @@
 # R4D0N Firmware Flasher For Node
+[![CodeQL](https://github.com/R4D0N/R4D0N-Firmware-Flasher-for-Node/workflows/CodeQL/badge.svg)](https://github.com/R4D0N/R4D0N-Firmware-Flasher-for-Node/actions/workflows/codeql.yml)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/R4D0N/R4D0N-Firmware-Flasher-for-Node)
+![GitHub issues](https://img.shields.io/github/issues-raw/R4D0N/R4D0N-Firmware-Flasher-for-Node)
+![python version](https://img.shields.io/badge/python-%20%3E%3D3.7-blue?style=flat&logo=python)
+![GitHub last commit](https://img.shields.io/github/last-commit/R4D0N/R4D0N-Firmware-Flasher-For-Node)
+
 This tool allows Non-Windows users to flash their Fiberpunk Nodes with the newest firmware.
 This tool works on Windows as well, but the Fiberpunk Devs have a released a binary that does the same job with a GUI.
 
