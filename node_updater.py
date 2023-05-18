@@ -125,8 +125,17 @@ def firmware_selection():
         if firmware_hash in approved_hashes:
             return dialog
         else:
-            print("{} is not a valid firmware file.\nHalting Program".format(path.basename(dialog)))
-            quit()
+            payload = ["RFFN did not find the hash of this firmware file in the database.", 
+                       "This may be either a faulty file, or not in the database.",
+                       "Flashing a faulty file can damage your device. Would you like to continue?",
+                       "FILE: {}".format(path.basename(dialog)),
+                       "HASH: {}".format(firmware_hash)]
+            eula = askokcancel(title="Firmware Hash Error", message="\n".join(payload))                              
+                               
+            if eula is True:
+                return dialog
+            else:
+                quit()
 
 def webpage_selection(): #Unused (Might use in later versions)
     dialog = askdirectory(title="Select Node Webpage Folder")
@@ -244,6 +253,7 @@ if __name__ == "__main__":
     #Import Non-Core Libs post
     try:
         from tkinter.filedialog import askopenfilename, askdirectory
+        from tkinter.messagebox import askokcancel
         from serial.tools import list_ports
         import esptool
     except Exception as e:

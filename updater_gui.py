@@ -102,8 +102,19 @@ def firmware_selection():
             copy(dialog, cache_location)
             return cache_location
         else:
-            messagebox.showerror("R4D0N Firmware Flasher for Node - ERROR", "{} is not a valid firmware file.\nHalting Program".format(path.basename(dialog)))
-            quit()
+            payload = ["RFFN did not find the hash of this firmware file in the database.", 
+                       "This may be either a faulty file, or not in the database.",
+                       "Flashing a faulty file can damage your device. Would you like to continue?",
+                       "FILE: {}".format(path.basename(dialog)),
+                       "HASH: {}".format(firmware_hash)]
+            eula = messagebox.askokcancel(title="Firmware Hash Error", message="\n".join(payload))                              
+                               
+            if eula is True:
+                cache_location = "flashing_cache\\{}".format(path.basename(dialog))
+                copy(dialog, cache_location)
+                return cache_location
+            else:
+                quit()
 
 def webpage_selection(): #Unused (Might use in later versions)
     dialog = askdirectory(title="Select Node Webpage Folder")
